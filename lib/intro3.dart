@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'common/colors.dart';
 
-class IntroPage extends StatefulWidget {
-  IntroPage({Key? key, required this.onTap}) : super(key: key);
+class IntroPage3 extends StatefulWidget {
+  IntroPage3({Key? key, required this.onTap}) : super(key: key);
   var onTap;
-
   @override
-  _IntroPageState createState() => _IntroPageState();
+  _IntroPage3State createState() => _IntroPage3State();
 }
 
-class _IntroPageState extends State<IntroPage>
+class _IntroPage3State extends State<IntroPage3>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
@@ -30,7 +29,7 @@ class _IntroPageState extends State<IntroPage>
           children: [
             Positioned.fill(
                 child: Image.asset(
-              "assets/intro/intro1.jpg",
+              "assets/intro/intro3.jpg",
               fit: BoxFit.cover,
             )),
             Positioned.fill(
@@ -45,7 +44,7 @@ class _IntroPageState extends State<IntroPage>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "tunda\nstatus",
+                          "influenca",
                           textAlign: TextAlign.center,
                           style: titleTextStyle.copyWith(
                               color: Color(0xffC3E3F2),
@@ -57,7 +56,7 @@ class _IntroPageState extends State<IntroPage>
                           padding:
                               EdgeInsets.only(top: 8, left: v16, right: v16),
                           child: Text(
-                            "A Tunda LLC Application",
+                            "Earn money by sharing to yo whatsApp status",
                             textAlign: TextAlign.center,
                             style: titleTextStyle.copyWith(
                                 color: Color(0xff000000)),
@@ -72,7 +71,7 @@ class _IntroPageState extends State<IntroPage>
                       margin: EdgeInsets.only(
                           left: v16 * 3, right: v16 * 3, top: v16 * 3),
                       child: normalButton(
-                          v16: v16, bgColor: APP_PRIMARY, title: "Next"),
+                          v16: v16, bgColor: APP_PRIMARY, title: "Get Started"),
                     ),
                   ),
                 ]),

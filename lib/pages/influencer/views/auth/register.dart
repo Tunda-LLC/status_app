@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/pages/intro_index.dart';
 import '../toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -170,10 +171,9 @@ class _RegisterState extends State<Register> {
         automaticallyImplyLeading: true,
         backgroundColor: REAL_WHITE,
         leading: GestureDetector(
-          // onTap: () => _verified
-          //     ? Navigator.push(context,
-          //         CupertinoPageRoute(builder: (context) => IntroPage()))
-          //     : Navigator.pop(context),
+          onTap: () => _verified
+              ? navigatePage(context, className: IntroIndex())
+              : Navigator.pop(context),
           child: _verified
               ? Icon(
                   Icons.home_filled,
