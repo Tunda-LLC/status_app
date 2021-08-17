@@ -26,16 +26,16 @@ class _LoadingSplashState extends State<LoadingSplash> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "tunda status",
+                    "tunda\nstatus",
                     style: titleTextStyle.copyWith(
                         color: REAL_WHITE,
-                        fontSize: 36,
+                        fontSize: 48,
                         letterSpacing: 2,
                         fontFamily: "Network"),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16 * 2),
                   child: CupertinoActivityIndicator(),
                 )
               ],

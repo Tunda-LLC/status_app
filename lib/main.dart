@@ -58,7 +58,9 @@ class MyApp extends StatelessWidget {
         );
       },
       theme: ThemeData(
-          fontFamily: "ProximaNova", scaffoldBackgroundColor: SCAFFOLD_BG),
+          fontFamily: "ProximaNova",
+          primaryColor: APP_ACCENT,
+          scaffoldBackgroundColor: SCAFFOLD_BG),
       home: IntroIndex(),
     );
   }

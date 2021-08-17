@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:hive/hive.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/pages/index.dart';
 import 'package:status/pages/influencer/views/auth/google_signin.dart';
 import 'package:status/pages/influencer/views/auth/register.dart';
 import '../toast.dart';
@@ -46,15 +47,14 @@ class _LoginState extends State<Login> {
     }
     //todo go ahead check if account exists then show him so he can be a seller
     User user = FirebaseAuth.instance.currentUser!;
-    // var result = await userLogIn(email: user.email);
+
     // if (result.runtimeType == user_model.User) {
     //   _tokenBox.put("id", result.id); //put the id here
     //   _tokenBox.put("default_currency", result.currency);
     //   _tokenBox.put("country_name", result.country_name);
     //   _tokenBox.put("country_id", result.country_id);
-    //   showSuccessToast("You are logged In", context);
-    // Navigator.push(
-    //     context, CupertinoPageRoute(builder: (context) => Index()));
+    showSuccessToast("You are logged In", context);
+    Navigator.push(context, CupertinoPageRoute(builder: (context) => Index()));
     // } else {
     //   // if (result.contains('404')) {
     //   // new user

@@ -17,7 +17,6 @@ class _RegisterState extends State<Register> {
   TextEditingController _pswdController = TextEditingController();
   TextEditingController _confirmPswdController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _usernameController = TextEditingController();
   late PageController _pageController;
   // HIVE BOX
   // var box = Hive.box(UserRegBox);
@@ -43,16 +42,9 @@ class _RegisterState extends State<Register> {
     String _pswd = _pswdController.text.trim();
     String _pswd2 = _confirmPswdController.text.trim();
     String _eml = _emailController.text.trim();
-    String _username = _usernameController.text.trim();
+
     FocusScope.of(context).unfocus();
 
-    if (_username.length < 4) {
-      showErrorToast("Username should be greater than 4 characters", context);
-      setState(() {
-        _isLoading = false;
-      });
-      return;
-    }
     if (_pswd != _pswd2) {
       showErrorToast("Passwords don't match", context);
       setState(() {
@@ -201,27 +193,27 @@ class _RegisterState extends State<Register> {
             ListView(
               padding: EdgeInsets.all(v16),
               children: [
+                // Container(
+                //   child: Text(
+                //     "Username",
+                //     style: normalTextStyle,
+                //   ),
+                // ),
+                // Container(
+                //   child: TextField(
+                //     controller: _usernameController,
+                //     autofocus: false,
+                //     decoration: InputDecoration(
+                //         focusColor: APP_PRIMARY,
+                //         prefixIcon: Icon(Icons.account_circle_outlined),
+                //         border: OutlineInputBorder(
+                //           gapPadding: 2,
+                //           borderSide: BorderSide(color: Colors.black, width: 2),
+                //         )),
+                //   ),
+                // ),
                 Container(
-                  child: Text(
-                    "Username",
-                    style: normalTextStyle,
-                  ),
-                ),
-                Container(
-                  child: TextField(
-                    controller: _usernameController,
-                    autofocus: false,
-                    decoration: InputDecoration(
-                        focusColor: APP_PRIMARY,
-                        prefixIcon: Icon(Icons.account_circle_outlined),
-                        border: OutlineInputBorder(
-                          gapPadding: 2,
-                          borderSide: BorderSide(color: Colors.black, width: 2),
-                        )),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: v16),
+                  // padding: EdgeInsets.only(top: v16),
                   child: Text(
                     "Email",
                     style: normalTextStyle,
@@ -330,7 +322,7 @@ class _RegisterState extends State<Register> {
                 GestureDetector(
                   onTap: () => _isLoading ? null : _registerUser(),
                   child: Container(
-                    margin: EdgeInsets.only(top: v16),
+                    margin: EdgeInsets.only(top: v16 * 2),
                     child: normalButton(
                       v16: v16,
                       title: "Register",
