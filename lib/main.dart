@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:status/loading_splash.dart';
 import 'common/colors.dart';
 import 'pages/index.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,8 +33,7 @@ class _AppState extends State<App> {
           return MyApp();
         }
 
-        return Text("Problems"); //debug
-        // return Loading(); A splash screen with a loading widget
+        return LoadingSplash();
       },
     );
   }
