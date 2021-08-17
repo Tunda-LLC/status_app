@@ -5,12 +5,12 @@ import 'earnings.dart';
 import 'home.dart';
 import 'my_gigs.dart';
 
-class Index extends StatefulWidget {
+class InfluencerIndex extends StatefulWidget {
   @override
-  _IndexState createState() => _IndexState();
+  _InfluencerIndexState createState() => _InfluencerIndexState();
 }
 
-class _IndexState extends State<Index> {
+class _InfluencerIndexState extends State<InfluencerIndex> {
   late PageController pageController;
   int pageIndex = 0;
   final indexKey = new GlobalKey<ScaffoldState>();

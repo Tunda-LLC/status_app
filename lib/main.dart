@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'common/colors.dart';
 import 'pages/index.dart';
+import 'pages/influencer/views/index.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
           child: child!,
         );
       },
+      theme: ThemeData(
+          fontFamily: "ProximaNova", scaffoldBackgroundColor: SCAFFOLD_BG),
       home: Index(),
     );
   }
