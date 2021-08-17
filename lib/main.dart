@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:status/intro.dart';
 import 'package:status/loading_splash.dart';
+import 'package:status/pages/influencer/views/auth/login.dart';
 import 'common/colors.dart';
 import 'pages/index.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -58,7 +60,7 @@ class MyApp extends StatelessWidget {
       },
       theme: ThemeData(
           fontFamily: "ProximaNova", scaffoldBackgroundColor: SCAFFOLD_BG),
-      home: Index(),
+      home: IntroPage(),
     );
   }
 }

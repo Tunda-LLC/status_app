@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^1.4.0
   firebase_storage: ^10.0.1
   firebase_auth: ^3.0.1
+  google_sign_in: ^5.0.7
 
   # OTHERS
   image_picker: ^0.8.3+2
@@ -63,7 +64,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/splash.png
-  #   - images/a_dot_burr.jpeg
+    - assets/google.png
+    - assets/intro/intro1.jpg
+    - assets/intro/intro2.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

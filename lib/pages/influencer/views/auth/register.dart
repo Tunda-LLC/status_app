@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
 import '../toast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Register extends StatefulWidget {
   bool verify;
@@ -77,8 +78,8 @@ class _RegisterState extends State<Register> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: _eml, password: _pswd);
-      User user = FirebaseAuth.instance.currentUser;
-      user.updateProfile(displayName: _username);
+      // User user = FirebaseAuth.instance.currentUser!;
+      // user.updateProfile(displayName: _username);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         showErrorToast("The password provided is too weak", context);
@@ -103,17 +104,17 @@ class _RegisterState extends State<Register> {
       return;
     }
 
-    FirebaseAuth.instance.authStateChanges().listen((User user) async {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
       if (user == null) {
         // print('User is currently signed out!');
         // return;
       } else {
         // print('User is signed in!');
-        box.put('name', _username);
-        box.put('email', user.email);
+        // box.put('name', _username);
+        // box.put('email', user.email);
         if (!user.emailVerified) {
           await user.sendEmailVerification();
-          box.put("verifyPage", true);
+          // box.put("verifyPage", true);
           _pageController.animateToPage(
             _verifyPage,
             duration: Duration(milliseconds: 400),
@@ -131,7 +132,7 @@ class _RegisterState extends State<Register> {
   }
 
   resendLink() async {
-    User user = FirebaseAuth.instance.currentUser;
+    User user = FirebaseAuth.instance.currentUser!;
     await user.sendEmailVerification();
     showToast("Link sent again, check your email", context);
     return;
@@ -141,7 +142,7 @@ class _RegisterState extends State<Register> {
     setState(() {
       _isLoading2 = true;
     });
-    User user = FirebaseAuth.instance.currentUser;
+    User user = FirebaseAuth.instance.currentUser!;
     user.reload();
 
     if (user.emailVerified) {

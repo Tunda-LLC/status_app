@@ -21,10 +21,11 @@ Color lighten(Color color, [double amount = .1]) {
 }
 
 const APP_BLACK = Color(0xff040301);
-const APP_PRIMARY = Color(0xff24A8CC);
-const APP_ACCENT = Color(0xff010D39);
+const APP_PRIMARY = LIGHT_GREEN;
+const APP_ACCENT = REAL_BLACK;
 const Color LIGHT_BLUE = Color(0xff38DDFE);
 const Color APP_GREEN = Color(0xff4AD393);
+const Color LIGHT_GREEN = Color(0xff49C44B);
 const Color APP_GREY = Color(0xff757575);
 const Color REAL_WHITE = Color(0xffffffff);
 const Color REAL_BLACK = Color(0xff000000);
