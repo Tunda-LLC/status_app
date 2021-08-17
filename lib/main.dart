@@ -1,12 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'common/colors.dart';
 import 'pages/index.dart';
-import 'pages/influencer/views/index.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(App());
+}
+
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      // Initialize FlutterFire:
+      future: _initialization,
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          // return SomethingWentWrong();  error screen with try again button
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MyApp();
+        }
+
+        return Text("Problems"); //debug
+        // return Loading(); A splash screen with a loading widget
+      },
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "34869184885",
+    "project_id": "influencer-bee7a",
+    "storage_bucket": "influencer-bee7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:34869184885:android:7cfe74438bc920c8382b3c",
+        "android_client_info": {
+          "package_name": "com.tunda.status"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "34869184885-slq6m2sjjvf05kuh3giu25pgodtlnqs2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tunda.status",
+            "certificate_hash": "8bad07cbecb59b015cb6e68a7a1fed015095e9d0"
+          }
+        },
+        {
+          "client_id": "34869184885-g1gio6b8snc1rcnolbquu50u73kht5hp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaQOA42gp11LWfwuYKn7f95PJGDPwpDr8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "34869184885-g1gio6b8snc1rcnolbquu50u73kht5hp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
