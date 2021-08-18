@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
 import 'package:status/pages/client/adlists.dart';
@@ -79,7 +80,7 @@ class _ProjectUploadState extends State<ProjectUpload> {
               ),
             ),
             InkWell(
-              // onTap: () => navigatePage(context, className: AdsListV3()),
+              onTap: () => onRead(),
               child: Container(
                 margin: EdgeInsets.only(top: v16 * 1.5, bottom: v16),
                 child:
@@ -93,4 +94,39 @@ class _ProjectUploadState extends State<ProjectUpload> {
       ),
     );
   }
+
+  void onRead() {
+    final dbRef = FirebaseDatabase.instance.reference();
+    dbRef.once().then((DataSnapshot snapshot) {
+      print('Data : ${snapshot.value}');
+    });
+  }
+
+  onSent() {
+    final dbRef = FirebaseDatabase.instance.reference();
+    dbRef
+        .child("flutterDevsTeam7")
+        .set({'name': 'Navy', 'description': 'Associate Software Engineer'});
+  }
+
+  void updateData() {
+    final dbRef = FirebaseDatabase.instance.reference();
+    dbRef.child('flutterDevsTeam1').update({'description': 'CEO'});
+    dbRef.child('flutterDevsTeam2').update({'description': 'Team Lead'});
+    dbRef
+        .child('flutterDevsTeam3')
+        .update({'description': 'Senior Software Engineer'});
+  }
+
+  void deleteData() {
+    final databaseReference = FirebaseDatabase.instance.reference();
+    databaseReference.child('flutterDevsTeam1').remove();
+    databaseReference.child('flutterDevsTeam2').remove();
+    databaseReference.child('flutterDevsTeam3').remove();
+  }
+
+  // onCow() {
+  //   firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+  //       .ref('images/defaultProfile.png');
+  // }
 }

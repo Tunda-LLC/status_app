@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:status/pages/client/project_upload.dart';
 
 import 'common/colors.dart';
 
@@ -59,20 +60,24 @@ class _HomePageState extends State<HomePage>
             height: height / 4,
             child: Stack(
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                        left: v16 * 3,
-                        right: v16 * 3,
+                InkWell(
+                  onTap: () =>
+                      navigatePage(context, className: ProjectUpload()),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: v16 * 3,
+                          right: v16 * 3,
+                        ),
+                        child: normalButton(
+                            v16: v16 * 1.2,
+                            bgColor: APP_ACCENT,
+                            title: "New Project"),
                       ),
-                      child: normalButton(
-                          v16: v16 * 1.2,
-                          bgColor: APP_ACCENT,
-                          title: "New Project"),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Positioned(
                     left: width / 4,
