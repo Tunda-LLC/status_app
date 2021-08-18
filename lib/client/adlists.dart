@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
+// import 'dart:io' show Platform;
 
 import 'package:status/common/colors.dart';
-import 'package:status/pages/client/choose_days.dart';
+// import 'package:status/pages/client/choose_days.dart';
 
 class AdsListV3 extends StatefulWidget {
   const AdsListV3({Key? key}) : super(key: key);
@@ -151,7 +151,7 @@ class _AdsListV3State extends State<AdsListV3> {
           ),
 // ========================================================================= //
           InkWell(
-            onTap: () => navigatePage(context, className: ChooseDays()),
+            // onTap: () => navigatePage(context, className: ChooseDays()),
             child: Container(
               margin: EdgeInsets.only(top: v16 * 1.6, bottom: v16),
               child: normalButton(v16: v16, bgColor: APP_ACCENT, title: "Next"),

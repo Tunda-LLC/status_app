@@ -29,7 +29,7 @@ class ImageSlide extends StatefulWidget {
 class _ImageSlideState extends State<ImageSlide> {
   int pageIndex = 0;
   late Timer _timer;
-  int _timerDuration = 7;
+  int _timerDuration = 5;
   int imagesLength = 3;
   late double width;
   late double height;
@@ -63,7 +63,7 @@ class _ImageSlideState extends State<ImageSlide> {
     _pageController.animateToPage(
       pageIndex,
       duration: Duration(milliseconds: 400),
-      curve: Curves.bounceInOut,
+      curve: Curves.easeIn,
     );
   }
 
@@ -72,7 +72,7 @@ class _ImageSlideState extends State<ImageSlide> {
     return Container(
       width: width,
       decoration: BoxDecoration(color: REAL_WHITE),
-      height: height / 1.8,
+      height: height / 1.2,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
@@ -137,9 +137,10 @@ class _ImageSlideState extends State<ImageSlide> {
   }
 }
 
-Widget CustomNetworkImage(String url) {
+Widget CustomNetworkImage(String url, {bool cover = false}) {
   return Image.network(
     url,
+    fit: cover ? BoxFit.cover : BoxFit.contain,
     loadingBuilder:
         (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
       if (loadingProgress == null) return child;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:status/client/payment.dart';
 import 'package:status/common/colors.dart';
-import 'package:status/pages/client/payment.dart';
+// import 'package:status/pages/client/payment.dart';
 
 class EnterNumber extends StatefulWidget {
   const EnterNumber({Key? key}) : super(key: key);

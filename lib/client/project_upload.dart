@@ -1,8 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:status/client/adlists.dart';
+import 'package:status/client/choose_days.dart';
 import 'package:status/common/colors.dart';
-import 'package:status/pages/client/adlists.dart';
-import 'package:status/pages/client/choose_days.dart';
+// import 'package:status/pages/client/adlists.dart';
+// import 'package:status/pages/client/choose_days.dart';
 
 class ProjectUpload extends StatefulWidget {
   const ProjectUpload({Key? key}) : super(key: key);

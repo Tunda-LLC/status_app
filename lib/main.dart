@@ -7,6 +7,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'common/loading_splash.dart';
 import 'intro/intro_index.dart';
+import 'pages/index.dart';
 
 const UserBox = 'userBox';
 Future<void> main() async {
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
           fontFamily: "ProximaNova",
           primaryColor: APP_ACCENT,
           scaffoldBackgroundColor: SCAFFOLD_BG),
-      home: IntroIndex(),
+      home: Index(),
       // home: VerifyApplyPage(),
     );
   }

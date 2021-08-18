@@ -1,6 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/pages/featured.dart';
+import 'package:status/pages/history.dart';
 
 import 'home.dart';
 
@@ -77,11 +79,7 @@ class _IndexState extends State<Index> {
               controller: pageController,
               onPageChanged: onPageChanged,
               physics: NeverScrollableScrollPhysics(),
-              children: <Widget>[
-                HomePage(),
-                // HomeV3(),
-                // RunningPageV3(),
-              ]),
+              children: <Widget>[Featured(), HomePage(), History()]),
         ),
       ),
     );
