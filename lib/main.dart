@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:status/home.dart';
 import 'package:status/loading_splash.dart';
+import 'package:status/pages/index.dart';
 import 'common/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'apply_page.dart';
 import 'pages/intro_index.dart';
 
 void main() {
@@ -61,7 +64,8 @@ class MyApp extends StatelessWidget {
           fontFamily: "ProximaNova",
           primaryColor: APP_ACCENT,
           scaffoldBackgroundColor: SCAFFOLD_BG),
-      home: IntroIndex(),
+      // home: IntroIndex(),
+      home: ApplyPage(),
     );
   }
 }

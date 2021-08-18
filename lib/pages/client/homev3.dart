@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:mccounting_text/mccounting_text.dart';
 import 'package:status/common/colors.dart';
 import 'package:status/pages/client/project_upload.dart';

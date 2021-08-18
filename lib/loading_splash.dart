@@ -27,6 +27,7 @@ class _LoadingSplashState extends State<LoadingSplash> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "tunda\nstatus",
+                    textAlign: TextAlign.center,
                     style: titleTextStyle.copyWith(
                         color: REAL_WHITE,
                         fontSize: 48,

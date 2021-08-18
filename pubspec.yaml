@@ -39,12 +39,14 @@ dependencies:
   firebase_storage: ^10.0.1
   firebase_auth: ^3.0.1
   google_sign_in: ^5.0.7
+  firebase_database: ^7.2.0
 
   # OTHERS
   image_picker: ^0.8.3+2
   dots_indicator: ^2.0.0
   clipboard_manager: ^0.0.4
   mccounting_text:
+  esys_flutter_share: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +67,8 @@ flutter:
   assets:
     - assets/splash.png
     - assets/google.png
+    - assets/down.png
+    - assets/click.png
     - assets/intro/intro1.jpg
     - assets/intro/intro2.jpg
     - assets/intro/intro3.jpg

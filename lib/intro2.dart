@@ -71,7 +71,7 @@ class _IntroPage2State extends State<IntroPage2>
                       margin: EdgeInsets.only(
                           left: v16 * 3, right: v16 * 3, top: v16 * 3),
                       child: normalButton(
-                          v16: v16, bgColor: APP_PRIMARY, title: "Next"),
+                          v16: v16, bgColor: APP_ACCENT, title: "Next"),
                     ),
                   ),
                 ]),
