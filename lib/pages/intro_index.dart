@@ -3,6 +3,7 @@ import 'package:status/common/colors.dart';
 import 'package:status/intro.dart';
 import 'package:status/intro2.dart';
 import 'package:status/intro3.dart';
+import 'package:status/pages/index.dart';
 import 'package:status/pages/influencer/views/auth/login.dart';
 
 class IntroIndex extends StatefulWidget {
@@ -46,7 +47,7 @@ class _IntroIndexState extends State<IntroIndex> {
         );
       });
     } else {
-      navigatePage(context, className: Login());
+      navigatePage(context, className: Index());
     }
   }
 

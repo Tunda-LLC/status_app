@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:status/common/toast.dart';
+import 'package:status/share.dart';
 
 import 'common/colors.dart';
 
@@ -90,6 +92,43 @@ class _ApplyPageState extends State<ApplyPage> {
                         "Would like to earn money by posting on your WhatsApp status?",
                         style: titleTextStyle.copyWith(
                             fontWeight: FontWeight.w600, color: APP_ACCENT),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: v16 * 2, right: v16 * 2, top: v16 * 1.4),
+                      child: normalButton(
+                          v16: v16 * 1, bgColor: APP_ACCENT, title: "Next"),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: v16 * 2),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(v16),
+                      child: Text(
+                        "Share the following image to your status ",
+                        style: titleTextStyle.copyWith(
+                            fontWeight: FontWeight.w600, color: APP_ACCENT),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        showToast("Loading", context);
+                        shareImageFromUrl(
+                            appName: "Tunda Status",
+                            onError: (e) => showErrorToast("Error $e", context),
+                            url: testImage,
+                            caption: "Tunda Status");
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: v16 * 2, right: v16 * 2, top: v16 * 1.4),
+                        child: normalButton(
+                            v16: v16 * 1, bgColor: APP_PRIMARY, title: "Share"),
                       ),
                     ),
                     Container(

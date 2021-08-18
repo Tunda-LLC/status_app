@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:status/home.dart';
 import 'package:status/loading_splash.dart';
 import 'package:status/pages/index.dart';
+import 'package:status/verify_apply.dart';
 import 'common/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -64,8 +65,8 @@ class MyApp extends StatelessWidget {
           fontFamily: "ProximaNova",
           primaryColor: APP_ACCENT,
           scaffoldBackgroundColor: SCAFFOLD_BG),
-      // home: IntroIndex(),
-      home: ApplyPage(),
+      home: IntroIndex(),
+      // home: VerifyApplyPage(),
     );
   }
 }
