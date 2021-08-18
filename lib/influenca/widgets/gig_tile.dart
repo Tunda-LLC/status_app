@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
-import 'package:status/pages/influencer/views/gig/gig.dart';
+import 'package:status/influenca/gig/gig.dart';
 
 class GigTile extends StatefulWidget {
   const GigTile({

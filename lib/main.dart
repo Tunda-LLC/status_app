@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:status/home.dart';
-import 'package:status/loading_splash.dart';
-import 'package:status/pages/index.dart';
-import 'package:status/verify_apply.dart';
 import 'common/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hive/hive.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:hive_flutter/hive_flutter.dart';
+import 'common/loading_splash.dart';
+import 'intro/intro_index.dart';
 
-import 'apply_page.dart';
-import 'pages/intro_index.dart';
-
-void main() {
+const UserBox = 'userBox';
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox(UserBox);
   runApp(App());
 }
 
@@ -30,9 +31,9 @@ class _AppState extends State<App> {
       future: _initialization,
       builder: (context, snapshot) {
         // Check for errors
-        if (snapshot.hasError) {
-          // return SomethingWentWrong();  error screen with try again button
-        }
+        // if (snapshot.hasError) {
+        // return SomethingWentWrong();  error screen with try again button
+        // }
 
         if (snapshot.connectionState == ConnectionState.done) {
           return MyApp();

@@ -2,7 +2,7 @@ import 'package:clipboard_manager/clipboard_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
 import 'package:status/common/toast.dart';
-import 'package:status/pages/influencer/views/widgets/image_tiles.dart';
+import 'package:status/influenca/widgets/image_tiles.dart';
 
 class Gig extends StatefulWidget {
   const Gig({Key? key}) : super(key: key);

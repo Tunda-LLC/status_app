@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:status/common/colors.dart';
 
-import 'common/colors.dart';
-
-class IntroPage2 extends StatefulWidget {
-  IntroPage2({Key? key, required this.onTap}) : super(key: key);
+class IntroPage extends StatefulWidget {
+  IntroPage({Key? key, required this.onTap}) : super(key: key);
   var onTap;
+
   @override
-  _IntroPage2State createState() => _IntroPage2State();
+  _IntroPageState createState() => _IntroPageState();
 }
 
-class _IntroPage2State extends State<IntroPage2>
+class _IntroPageState extends State<IntroPage>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
@@ -29,7 +29,7 @@ class _IntroPage2State extends State<IntroPage2>
           children: [
             Positioned.fill(
                 child: Image.asset(
-              "assets/intro/intro2.jpg",
+              "assets/intro/intro1.jpg",
               fit: BoxFit.cover,
             )),
             Positioned.fill(
@@ -44,7 +44,7 @@ class _IntroPage2State extends State<IntroPage2>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "client",
+                          "tunda\nstatus",
                           textAlign: TextAlign.center,
                           style: titleTextStyle.copyWith(
                               color: Color(0xffC3E3F2),
@@ -56,7 +56,7 @@ class _IntroPage2State extends State<IntroPage2>
                           padding:
                               EdgeInsets.only(top: 8, left: v16, right: v16),
                           child: Text(
-                            "Share yo image/video with over 500 people",
+                            "A Tunda LLC Application",
                             textAlign: TextAlign.center,
                             style: titleTextStyle.copyWith(
                                 color: Color(0xff000000)),

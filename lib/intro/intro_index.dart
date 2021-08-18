@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
-import 'package:status/intro.dart';
-import 'package:status/intro2.dart';
-import 'package:status/intro3.dart';
+import 'package:status/intro/intro.dart';
+import 'package:status/intro/intro2.dart';
+import 'package:status/intro/intro3.dart';
 import 'package:status/pages/index.dart';
-import 'package:status/pages/influencer/views/auth/login.dart';
 
 class IntroIndex extends StatefulWidget {
   const IntroIndex({Key? key}) : super(key: key);

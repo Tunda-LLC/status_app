@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:status/pages/client/project_upload.dart';
-
-import 'common/colors.dart';
+import 'package:status/client/project_upload.dart';
+import 'package:status/common/colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'common/colors.dart';
+import 'package:status/common/colors.dart';
 
 class IntroPage3 extends StatefulWidget {
   IntroPage3({Key? key, required this.onTap}) : super(key: key);

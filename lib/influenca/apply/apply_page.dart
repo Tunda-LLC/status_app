@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:status/common/colors.dart';
+import 'package:status/common/share.dart';
 import 'package:status/common/toast.dart';
-import 'package:status/share.dart';
-
-import 'common/colors.dart';
 
 class ApplyPage extends StatefulWidget {
   const ApplyPage({Key? key}) : super(key: key);
