@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:status/client/project_upload.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/influenca/influenca_index.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -173,11 +174,14 @@ class _HomePageState extends State<HomePage>
               ],
             ),
           ),
-          Container(
-            margin:
-                EdgeInsets.only(left: v16 * 3, right: v16 * 3, top: v16 * 1.4),
-            child: normalButton(
-                v16: v16 * 1, bgColor: APP_ACCENT, title: "Influenca"),
+          InkWell(
+            onTap: () => navigatePage(context, className: InfluencerIndex()),
+            child: Container(
+              margin: EdgeInsets.only(
+                  left: v16 * 3, right: v16 * 3, top: v16 * 1.4),
+              child: normalButton(
+                  v16: v16 * 1, bgColor: APP_ACCENT, title: "Influenca"),
+            ),
           ),
         ]),
       ),

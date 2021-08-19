@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
-import 'package:status/pages/intro_index.dart';
-import '../toast.dart';
+// import 'package:status/pages/intro_index.dart';
+// import '../toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:status/common/toast.dart';
+import 'package:status/intro/intro_index.dart';
 
 class Register extends StatefulWidget {
   bool verify;

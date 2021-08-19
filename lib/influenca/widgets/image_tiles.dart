@@ -8,6 +8,7 @@ class ImageSlide extends StatefulWidget {
   ImageSlide(
       {required this.width,
       required this.v16,
+      this.isClient = true,
       required this.imagesLength,
       required this.timerDuration,
       required this.showButtons,
@@ -19,7 +20,7 @@ class ImageSlide extends StatefulWidget {
   double width;
   double height;
   double v16;
-  bool showButtons;
+  bool showButtons, isClient;
   List<Widget> images;
 
   @override
@@ -72,7 +73,7 @@ class _ImageSlideState extends State<ImageSlide> {
     return Container(
       width: width,
       decoration: BoxDecoration(color: REAL_WHITE),
-      height: height / 1.2,
+      height: widget.isClient ? height / 1.2 : height / 1.6,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[

@@ -14,8 +14,8 @@ class Index extends StatefulWidget {
 }
 
 class _IndexState extends State<Index> {
-  PageController pageController = PageController(initialPage: 0);
-  int pageIndex = 0;
+  int pageIndex = 1;
+  PageController pageController = PageController(initialPage: 1);
 
   @override
   void initState() {
@@ -60,11 +60,11 @@ class _IndexState extends State<Index> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
                 icon: Icon(
-                  EvaIcons.homeOutline,
+                  EvaIcons.compassOutline,
                 ),
                 label: "Home"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard_outlined), label: "Home"),
+                icon: Icon(EvaIcons.homeOutline), label: "Home"),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.history_outlined,

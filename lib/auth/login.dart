@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:status/auth/register.dart';
 // import 'package:hive/hive.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/common/toast.dart';
 import 'package:status/pages/index.dart';
-import 'package:status/pages/influencer/views/auth/google_signin.dart';
-import 'package:status/pages/influencer/views/auth/register.dart';
-import '../toast.dart';
 import 'forgot_password.dart';
+import 'google_signin.dart';
 
 class Login extends StatefulWidget {
   @override

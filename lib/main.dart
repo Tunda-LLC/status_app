@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
           fontFamily: "ProximaNova",
           primaryColor: APP_ACCENT,
           scaffoldBackgroundColor: SCAFFOLD_BG),
-      home: Index(),
+      home: IntroIndex(),
       // home: VerifyApplyPage(),
     );
   }

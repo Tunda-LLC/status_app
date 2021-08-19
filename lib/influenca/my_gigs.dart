@@ -1,73 +1,68 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
-
-import 'verify_gig.dart';
-import 'widgets/gig_tile.dart';
+import 'package:status/pages/history.dart';
 
 class MyGigs extends StatefulWidget {
-  const MyGigs({Key? key}) : super(key: key);
+  MyGigs({Key? key}) : super(key: key);
 
   @override
   _MyGigsState createState() => _MyGigsState();
 }
 
-class _MyGigsState extends State<MyGigs> {
+class _MyGigsState extends State<MyGigs> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     double v16 = width / 20;
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: REAL_WHITE,
-          bottom: TabBar(
-            labelColor: APP_BLACK,
-            unselectedLabelColor: APP_GREY,
-            indicatorColor: APP_BLACK,
-            tabs: [
-              Tab(text: "Accepted"),
-              Tab(text: "Pending"),
-              Tab(text: "Verified"),
-            ],
-          ),
-          title: Text(
-            'My Gigs',
-            style: titleTextStyle.copyWith(color: APP_BLACK),
-          ),
-        ),
-        body: Container(
-          height: height,
-          width: width,
-          child: TabBarView(
-            children: [
-              ListView(
-                children: <Widget>[
-                  GigTile(
-                    v16: v16,
-                    status: 1,
-                  ),
-                  GigTile(
-                    v16: v16,
-                    status: 2,
-                  ),
-                  GigTile(
-                    v16: v16,
-                    status: 3,
-                  ),
-                  GigTile(v16: v16),
-                  GigTile(v16: v16),
-                ],
-              ),
-              InkWell(
-                  onTap: () => navigatePage(context, className: VerifyGig()),
-                  child: Icon(Icons.directions_transit)),
-              Icon(Icons.directions_bike),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        backgroundColor: REAL_WHITE,
+        centerTitle: true,
+        elevation: 2,
+        title: Text(
+          "My Gigs",
+          style: TextStyle(color: APP_ACCENT, fontWeight: FontWeight.w500),
         ),
       ),
+      body: Container(
+          width: width,
+          height: height,
+          child: ListView(
+              padding:
+                  EdgeInsets.only(bottom: v16, left: v16 / 2, right: v16 / 2),
+              children: <Widget>[
+                //
+                ProjectTile(
+                    url: testImage,
+                    title: "Katooke ads",
+                    isComplete: true,
+                    isClient: false,
+                    width: width,
+                    v16: v16),
+                ProjectTile(
+                    url: testImage,
+                    title: "Tunda ads",
+                    isComplete: false,
+                    isClient: false,
+                    isVerified: false,
+                    width: width,
+                    v16: v16),
+                ProjectTile(
+                    url: testImage2,
+                    title: "Tunda Status",
+                    isComplete: false,
+                    isClient: false,
+                    isVerified: true,
+                    width: width,
+                    v16: v16),
+              ])),
     );
   }
 }

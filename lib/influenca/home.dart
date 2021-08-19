@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/pages/history.dart';
 
-import 'widgets/gig_tile.dart';
-
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class InfluencaHome extends StatefulWidget {
+  InfluencaHome({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _InfluencaHomeState createState() => _InfluencaHomeState();
 }
 
-class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
+class _InfluencaHomeState extends State<InfluencaHome>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -19,34 +19,54 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     double v16 = width / 20;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "#Influencer",
-          style: titleTextStyle.copyWith(color: APP_BLACK),
-        ),
+        automaticallyImplyLeading: true,
         backgroundColor: REAL_WHITE,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: APP_ACCENT,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 2,
+        title: Text(
+          "Influenca",
+          style: TextStyle(color: APP_ACCENT, fontWeight: FontWeight.w500),
+        ),
       ),
       body: Container(
           width: width,
           height: height,
           child: ListView(
-              padding: EdgeInsets.only(
-                  top: 8, bottom: v16, left: v16 / 2, right: v16 / 2),
+              padding:
+                  EdgeInsets.only(bottom: v16, left: v16 / 2, right: v16 / 2),
               children: <Widget>[
                 //
-                GigTile(v16: v16),
-                GigTile(v16: v16),
-                GigTile(v16: v16),
-                GigTile(v16: v16),
-                GigTile(v16: v16),
-                GigTile(v16: v16),
-                GigTile(v16: v16),
-                GigTile(v16: v16),
-                GigTile(v16: v16),
-                GigTile(v16: v16),
+                ProjectTile(
+                    url: testImage,
+                    title: "Katooke ads",
+                    isComplete: true,
+                    width: width,
+                    v16: v16),
+                ProjectTile(
+                    url: testImage,
+                    title: "Tunda ads",
+                    isComplete: false,
+                    width: width,
+                    v16: v16),
+                ProjectTile(
+                    url: testImage2,
+                    title: "Tunda Status",
+                    isComplete: false,
+                    width: width,
+                    v16: v16),
               ])),
     );
   }

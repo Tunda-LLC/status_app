@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/influenca/gig/gig.dart';
 import 'package:status/influenca/widgets/gig_tile.dart';
 import 'package:status/influenca/widgets/image_tiles.dart';
 import 'package:status/pages/client_project.dart';
@@ -57,11 +58,13 @@ class ProjectTile extends StatefulWidget {
       required this.title,
       required this.width,
       required this.isComplete,
+      this.isClient = true,
+      this.isVerified = false,
       required this.v16})
       : super(key: key);
   double v16, width;
   String url, title;
-  bool isComplete;
+  bool isComplete, isClient, isVerified;
   @override
   _ProjectTileState createState() => _ProjectTileState();
 }
@@ -77,7 +80,8 @@ class _ProjectTileState extends State<ProjectTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => navigatePage(context, className: ClientProject()),
+      onTap: () => navigatePage(context,
+          className: widget.isClient ? ClientProject() : Gig()),
       child: Container(
         padding: EdgeInsets.only(
           left: widget.v16,
@@ -110,7 +114,13 @@ class _ProjectTileState extends State<ProjectTile> {
                       style: titleTextStyle,
                     ),
                   ),
-                  widget.isComplete ? complete() : ongoing()
+                  widget.isClient
+                      ? widget.isComplete
+                          ? complete()
+                          : ongoing()
+                      : widget.isVerified
+                          ? verified()
+                          : pending()
                 ],
               ),
             ),
@@ -140,5 +150,13 @@ class _ProjectTileState extends State<ProjectTile> {
 
   ongoing() {
     return tag("Ongoing", APP_PRIMARY);
+  }
+
+  pending() {
+    return tag("Pending", APP_RED);
+  }
+
+  verified() {
+    return tag("Verified", APP_ACCENT);
   }
 }

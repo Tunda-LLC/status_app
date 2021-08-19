@@ -1,6 +1,7 @@
 import 'package:clipboard_manager/clipboard_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/common/share.dart';
 import 'package:status/common/toast.dart';
 import 'package:status/influenca/widgets/image_tiles.dart';
 
@@ -13,11 +14,11 @@ class Gig extends StatefulWidget {
 
 class _GigState extends State<Gig> {
   String caption = "Loremjfvjfjf  fdjdfjdfj jfdjdfjdfj jdfjdfjdfjdfj jvjdfjdfj";
-  bool _show = false;
+  bool _show = true;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     double v16 = width / 20;
     return Scaffold(
       appBar: AppBar(
@@ -40,69 +41,39 @@ class _GigState extends State<Gig> {
         height: height,
         width: width,
         child: ListView(
+          padding: EdgeInsets.only(top: v16),
           children: <Widget>[
-            ImageSlide(
-                width: width,
-                showButtons: _show,
-                v16: v16,
-                imagesLength: 3,
-                timerDuration: 12,
-                images: <Widget>[
-                  CustomNetworkImage(testImage1),
-                  CustomNetworkImage(testImage),
-                  CustomNetworkImage(testImage2),
-                ],
-                height: height),
+            Container(
+                height: height / 2.5,
+                width: width - (4 * v16),
+                child: Center(child: CustomNetworkImage(testImage))),
             // CAPTION
             Container(
               padding: EdgeInsets.only(
-                  left: v16 / 2,
-                  right: v16 / 2,
-                  bottom: v16 / 3,
-                  top: v16 / 1.4),
+                  left: v16, right: v16, bottom: v16 * 2, top: v16 * 2),
               child: Text(
                 caption,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: normalTextStyle.copyWith(color: APP_GREY),
+                style: titleTextStyle.copyWith(fontWeight: FontWeight.w500),
               ),
             ),
-            Visibility(
-              visible: _show,
-              child: InkWell(
-                onTap: () {
-                  ClipboardManager.copyToClipBoard(caption).then((result) {
-                    showToast("Text copied to clipBoard", context);
-                  });
-                },
-                child: Container(
-                  margin: EdgeInsets.only(
-                    bottom: 8,
-                    left: v16 / 2,
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Icon(
-                        Icons.copy,
-                        color: APP_BLACK,
-                      ),
-                      Text(
-                        "Copy",
-                        style: normalTextStyle.copyWith(color: APP_BLACK),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
+
             // BUTTON
-            Container(
-                margin: EdgeInsets.only(
-                    left: v16 / 2, right: v16 / 2, bottom: v16 / 2),
-                child: normalButton(
-                    v16: v16 / 1.6, bgColor: APP_BLACK, title: "Accept Gig")),
+            InkWell(
+              onTap: () {
+                showToast("Loading", context);
+                shareImageFromUrl(
+                    appName: "Tunda Status",
+                    onError: (e) => showErrorToast("Error $e", context),
+                    url: testImage,
+                    caption: caption);
+              },
+              child: Container(
+                  margin: EdgeInsets.only(left: v16, right: v16, bottom: v16),
+                  child: normalButton(
+                      v16: v16, bgColor: APP_BLACK, title: "Post")),
+            ),
           ],
         ),
       ),
