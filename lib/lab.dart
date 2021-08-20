@@ -17,6 +17,8 @@ import 'package:image_picker/image_picker.dart';
 // // @dart=2.9
 import 'dart:typed_data';
 
+import 'common/share.dart';
+
 /// Present a dialog so the user can save as... a bunch of bytes.
 Future<void> saveAsBytes(Uint8List bytes, String suggestedName) async {
   return;
@@ -86,7 +88,7 @@ class _TaskManager extends State<TaskManager> {
     firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
         .ref()
         .child('playground')
-        .child('/some-image.jpg');
+        .child('/${getRandomString(5)}some-image.jpg');
 
     final metadata = firebase_storage.SettableMetadata(
         contentType: 'image/jpeg',
@@ -266,7 +268,7 @@ class UploadTaskListTile extends StatelessWidget {
 
   /// Displays the current transferred bytes of the task.
   String _bytesTransferred(firebase_storage.TaskSnapshot snapshot) {
-    return '${snapshot.bytesTransferred}/${snapshot.totalBytes}';
+    return '${(snapshot.bytesTransferred / snapshot.totalBytes) * 100} %';
   }
 
   @override
@@ -292,14 +294,28 @@ class UploadTaskListTile extends StatelessWidget {
             subtitle = const Text('Something went wrong.');
           }
         } else if (snapshot != null) {
-          subtitle = Text('$state: ${_bytesTransferred(snapshot)} bytes sent');
+          if (state == firebase_storage.TaskState.canceled) {
+            subtitle = Text('Canceled: ${_bytesTransferred(snapshot)}');
+          }
+          if (state == firebase_storage.TaskState.running) {
+            subtitle = Text('Running: ${_bytesTransferred(snapshot)}');
+          }
+          if (state == firebase_storage.TaskState.paused) {
+            subtitle = Text('Paused: ${_bytesTransferred(snapshot)}');
+          }
+          if (state == firebase_storage.TaskState.error) {
+            subtitle = Text('Error: ${_bytesTransferred(snapshot)}');
+          }
+          if (state == firebase_storage.TaskState.success) {
+            subtitle = Text('Success: ${_bytesTransferred(snapshot)}');
+          }
         }
 
         return Dismissible(
           key: Key(task.hashCode.toString()),
           onDismissed: ($) => onDismissed(),
           child: ListTile(
-            title: Text('Upload Task #${task.hashCode}'),
+            title: Text('Upload Task '),
             subtitle: subtitle,
             trailing: Row(
               mainAxisSize: MainAxisSize.min,

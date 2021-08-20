@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^3.0.1
   google_sign_in: ^5.0.7
   firebase_database: ^7.2.0
+  uuid: ^3.0.4
 
   # HIVE
   hive: 
@@ -51,6 +52,8 @@ dependencies:
   clipboard_manager: ^0.0.4
   mccounting_text:
   esys_flutter_share: ^1.0.2
+  path:
+  mime:
 
 dev_dependencies:
   flutter_test:

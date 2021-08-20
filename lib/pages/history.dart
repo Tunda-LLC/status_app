@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
 import 'package:status/influenca/gig/gig.dart';
 import 'package:status/influenca/widgets/gig_tile.dart';
 import 'package:status/influenca/widgets/image_tiles.dart';
+import 'package:status/models/project.dart';
 import 'package:status/pages/client_project.dart';
 
 class History extends StatefulWidget {
@@ -13,6 +16,16 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> with AutomaticKeepAliveClientMixin {
+  late String id;
+  List<Project> projects = [];
+  @override
+  void initState() {
+    super.initState();
+
+    User user = FirebaseAuth.instance.currentUser!;
+    id = user.uid;
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -34,15 +47,42 @@ class _HistoryState extends State<History> with AutomaticKeepAliveClientMixin {
       body: Container(
         width: width,
         height: height,
-        child: ListView(children: <Widget>[
-          //
-          ProjectTile(
-              url: testImage,
-              title: "Ads only",
-              isComplete: true,
-              width: width,
-              v16: v16),
-        ]),
+        child: StreamBuilder(
+            stream: FirebaseDatabase.instance
+                .reference()
+                .child("projects")
+                .orderByChild("client_id")
+                .equalTo(id)
+                .onValue,
+            builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
+              if (!snapshot.hasData) {
+                return Center(
+                  child: Text("Your projects will appear here :)"),
+                );
+              }
+
+              Map<dynamic, dynamic> map = snapshot.data!.snapshot.value;
+
+              projects.clear();
+
+              map.forEach((dynamic, v) => projects.add(new Project(
+                    title: v["title"],
+                    caption: v["caption"],
+                    url: v["media"],
+                    is_done: v['is_done'],
+                    clientId: v["client_id"],
+                  )));
+              return ListView.builder(
+                  itemCount: projects.length,
+                  itemBuilder: (context, index) {
+                    return ProjectTile(
+                        url: projects[index].url,
+                        title: projects[index].title,
+                        isComplete: projects[index].is_done,
+                        width: width,
+                        v16: v16);
+                  });
+            }),
       ),
     );
   }

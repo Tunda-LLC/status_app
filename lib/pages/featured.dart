@@ -1,7 +1,9 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:status/common/colors.dart';
 import 'package:status/influenca/widgets/image_tiles.dart';
+import 'package:status/models/project.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class Featured extends StatefulWidget {
@@ -13,6 +15,7 @@ class Featured extends StatefulWidget {
 
 class _FeaturedState extends State<Featured>
     with AutomaticKeepAliveClientMixin {
+  List<Project> projects = [];
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -37,32 +40,53 @@ class _FeaturedState extends State<Featured>
         child: ListView(children: <Widget>[
           Container(
             height: height,
-            child: StaggeredGridView.countBuilder(
-              crossAxisCount: 4,
-              itemCount: 8,
-              padding: EdgeInsets.only(
-                  left: 4, right: 4, top: v16, bottom: height / 3),
-              itemBuilder: (BuildContext context, int index) => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: APP_GREY,
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
+            child: StreamBuilder(
+                stream: FirebaseDatabase.instance
+                    .reference()
+                    .child("projects")
+                    .orderByChild("is_done")
+                    .equalTo(true)
+                    .onValue,
+                builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: Text("Nothing yet :("),
+                    );
+                  }
+
+                  Map<dynamic, dynamic> map = snapshot.data!.snapshot.value;
+
+                  projects.clear();
+
+                  map.forEach((dynamic, v) => projects.add(new Project(
+                        title: v["title"],
+                        caption: v["caption"],
+                        url: v["media"],
+                        is_done: v['is_done'],
+                        clientId: v["client_id"],
+                      )));
+                  return StaggeredGridView.countBuilder(
+                    crossAxisCount: 4,
+                    itemCount: projects.length,
+                    padding: EdgeInsets.only(
+                        left: 4, right: 4, top: v16, bottom: height / 3),
+                    itemBuilder: (BuildContext context, int index) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: APP_GREY,
+                        ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: CustomNetworkImage(testImage2, cover: true),
-                        ),
-                      ),
-                    ],
-                  )),
-              staggeredTileBuilder: (int index) =>
-                  StaggeredTile.count(2, index.isEven ? 3 : 2),
-              mainAxisSpacing: 4,
-              crossAxisSpacing: 4,
-            ),
-          )
+                          child: CustomNetworkImage(projects[index].url,
+                              cover: true),
+                        )),
+                    staggeredTileBuilder: (int index) =>
+                        StaggeredTile.count(2, index.isEven ? 3 : 2),
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                  );
+                }),
+          ),
         ]),
       ),
     );
