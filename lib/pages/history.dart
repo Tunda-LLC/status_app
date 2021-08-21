@@ -69,6 +69,7 @@ class _HistoryState extends State<History> with AutomaticKeepAliveClientMixin {
                     title: v["title"],
                     caption: v["caption"],
                     url: v["media"],
+                    id: snapshot.data!.snapshot.key!,
                     is_done: v['is_done'],
                     clientId: v["client_id"],
                   )));
@@ -78,6 +79,7 @@ class _HistoryState extends State<History> with AutomaticKeepAliveClientMixin {
                     return ProjectTile(
                         url: projects[index].url,
                         title: projects[index].title,
+                        id: projects[index].id,
                         isComplete: projects[index].is_done,
                         width: width,
                         v16: v16);
@@ -97,13 +99,14 @@ class ProjectTile extends StatefulWidget {
       required this.url,
       required this.title,
       required this.width,
+      required this.id,
       required this.isComplete,
       this.isClient = true,
       this.isVerified = false,
       required this.v16})
       : super(key: key);
   double v16, width;
-  String url, title;
+  String url, title, id;
   bool isComplete, isClient, isVerified;
   @override
   _ProjectTileState createState() => _ProjectTileState();
@@ -121,7 +124,11 @@ class _ProjectTileState extends State<ProjectTile> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => navigatePage(context,
-          className: widget.isClient ? ClientProject() : Gig()),
+          className: widget.isClient
+              ? ClientProject(
+                  projectId: widget.id,
+                )
+              : Gig()),
       child: Container(
         padding: EdgeInsets.only(
           left: widget.v16,

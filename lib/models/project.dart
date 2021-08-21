@@ -3,6 +3,7 @@ class Project {
   String caption;
   String url;
   String clientId;
+  String id;
   bool is_done;
 
   Project(
@@ -10,5 +11,6 @@ class Project {
       required this.clientId,
       required this.title,
       required this.is_done,
+      required this.id,
       required this.url});
 }

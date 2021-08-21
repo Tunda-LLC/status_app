@@ -1,6 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
-import 'package:status/common/toast.dart';
 import 'package:status/influenca/widgets/image_tiles.dart';
 
 class VerifyProject extends StatefulWidget {
@@ -11,8 +11,6 @@ class VerifyProject extends StatefulWidget {
 }
 
 class _VerifyProjectState extends State<VerifyProject> {
-  String caption = "Loremjfvjfjf  fdjdfjdfj jfdjdfjdfj jdfjdfjdfjdfj jvjdfjdfj";
-  bool _show = false;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -38,22 +36,30 @@ class _VerifyProjectState extends State<VerifyProject> {
       body: Container(
         height: height,
         width: width,
-        child: ListView(
-          children: <Widget>[
-            ImageSlide(
-                width: width,
-                showButtons: _show,
-                v16: v16,
-                imagesLength: 3,
-                timerDuration: 12,
-                images: <Widget>[
-                  CustomNetworkImage(testImage1),
-                  CustomNetworkImage(testImage),
-                  CustomNetworkImage(testImage2),
-                ],
-                height: height),
-            // CAPTION
-          ],
+        child: StreamBuilder(
+          stream: FirebaseDatabase.instance
+              .reference()
+              .child("projects")
+              .orderByChild("client_id")
+              .equalTo(id)
+              .onValue,
+          child: ListView(
+            children: <Widget>[
+              ImageSlide(
+                  width: width,
+                  showButtons: false,
+                  v16: v16,
+                  imagesLength: 3,
+                  timerDuration: 12,
+                  images: <Widget>[
+                    CustomNetworkImage(testImage1),
+                    CustomNetworkImage(testImage),
+                    CustomNetworkImage(testImage2),
+                  ],
+                  height: height),
+              // CAPTION
+            ],
+          ),
         ),
       ),
     );

@@ -1,16 +1,45 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
 import 'package:status/influenca/widgets/image_tiles.dart';
 import 'package:status/pages/verified_pages.dart';
 
 class ClientProject extends StatefulWidget {
-  const ClientProject({Key? key}) : super(key: key);
+  const ClientProject({Key? key, required this.projectId}) : super(key: key);
+  final String projectId;
 
   @override
   _ClientProjectState createState() => _ClientProjectState();
 }
 
 class _ClientProjectState extends State<ClientProject> {
+  late String views, influencas, url, title, caption;
+  final dbRef = FirebaseDatabase.instance.reference();
+  @override
+  void initState() {
+    super.initState();
+    dbRef
+        .child("started_projects")
+        .child(widget.projectId)
+        .once()
+        .then((DataSnapshot snapshot) {
+      influencas = snapshot.value['influencas_used'];
+      views = snapshot.value['views_covered'];
+      print('Data : ${snapshot.value}');
+    });
+
+    dbRef
+        .child("projects")
+        .child(widget.projectId)
+        .once()
+        .then((DataSnapshot snapshot) {
+      title = snapshot.value['title'];
+      caption = snapshot.value['caption'];
+      url = snapshot.value['media'];
+      print('Data : ${snapshot.value}');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -58,7 +87,7 @@ class _ClientProjectState extends State<ClientProject> {
                       child: Container(
                         padding: EdgeInsets.only(left: 8),
                         child: Text(
-                          "katooke ads dfdhfffgfg bvfbgfgfg bfgfgfg  ggfgfgfg fgfgfgdfsd sdfsdfdsf fsdffffg ffddff ffddfdf",
+                          title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: titleTextStyle.copyWith(
@@ -82,7 +111,7 @@ class _ClientProjectState extends State<ClientProject> {
                       child: Container(
                         padding: EdgeInsets.only(left: 8),
                         child: Text(
-                          "428",
+                          views,
                           style: titleTextStyle.copyWith(
                               fontWeight: FontWeight.w500, color: APP_ACCENT),
                         ),
@@ -105,7 +134,7 @@ class _ClientProjectState extends State<ClientProject> {
                       child: Container(
                         padding: EdgeInsets.only(left: 8),
                         child: Text(
-                          "42",
+                          influencas,
                           style: titleTextStyle.copyWith(
                               fontWeight: FontWeight.w500, color: APP_ACCENT),
                         ),
@@ -128,7 +157,7 @@ class _ClientProjectState extends State<ClientProject> {
                       child: Container(
                         padding: EdgeInsets.only(left: 8),
                         child: Text(
-                          "katooke ads fff dffgfgfdf dfdhfffgfg bvfbgfgfg bfgfgfg  ggfgfgfg fgfgfgdfsd sdfsdfdsf fsdffffg ffddff ffddfdf",
+                          caption,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: titleTextStyle.copyWith(
@@ -161,7 +190,7 @@ class _ClientProjectState extends State<ClientProject> {
                 ),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: CustomNetworkImage(testImage)),
+                    child: CustomNetworkImage(url)),
               ),
             ]),
       ),

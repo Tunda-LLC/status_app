@@ -61,6 +61,7 @@ class _FeaturedState extends State<Featured>
                   map.forEach((dynamic, v) => projects.add(new Project(
                         title: v["title"],
                         caption: v["caption"],
+                        id: snapshot.data!.snapshot.key!,
                         url: v["media"],
                         is_done: v['is_done'],
                         clientId: v["client_id"],
