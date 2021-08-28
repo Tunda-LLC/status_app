@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/controllers/projectController.dart';
+import 'package:status/main.dart';
+import 'package:status/models/project.dart';
 import 'package:status/pages/history.dart';
 
 class MyGigs extends StatefulWidget {
@@ -13,6 +17,16 @@ class MyGigs extends StatefulWidget {
 class _MyGigsState extends State<MyGigs> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+  late String myId;
+  late Future<List<Project>> _myGigs;
+
+  @override
+  void initState() {
+    var box = Hive.box(UserBox);
+    myId = box.get("id");
+    _myGigs = fetchAcceptedGigs(myId: myId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,37 +46,48 @@ class _MyGigsState extends State<MyGigs> with AutomaticKeepAliveClientMixin {
         ),
       ),
       body: Container(
-          width: width,
-          height: height,
-          child: ListView(
-              padding:
-                  EdgeInsets.only(bottom: v16, left: v16 / 2, right: v16 / 2),
-              children: <Widget>[
-                //
-                ProjectTile(
-                    url: testImage,
-                    title: "Katooke ads",
-                    isComplete: true,
-                    isClient: false,
-                    width: width,
-                    v16: v16),
-                ProjectTile(
-                    url: testImage,
-                    title: "Tunda ads",
-                    isComplete: false,
-                    isClient: false,
-                    isVerified: false,
-                    width: width,
-                    v16: v16),
-                ProjectTile(
-                    url: testImage2,
-                    title: "Tunda Status",
-                    isComplete: false,
-                    isClient: false,
-                    isVerified: true,
-                    width: width,
-                    v16: v16),
-              ])),
+        width: width,
+        height: height,
+        child: FutureBuilder<List<Project>>(
+          future: _myGigs,
+          builder: (context, AsyncSnapshot<List<Project>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.none) {
+              _myGigs = fetchAcceptedGigs(myId: myId);
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: Padding(
+                padding: EdgeInsets.all(v16),
+                child: CupertinoActivityIndicator(),
+              ));
+            }
+
+            if (snapshot.data == null || snapshot.data?.length == 0) {
+              return Center(
+                  child: Padding(
+                padding: EdgeInsets.all(v16),
+                child: Text("No gigs yet"),
+              ));
+            }
+
+            return ListView.builder(
+                padding:
+                    EdgeInsets.only(bottom: v16, left: v16 / 2, right: v16 / 2),
+                itemCount: snapshot.data?.length,
+                itemBuilder: (context, index) {
+                  return ProjectTile(
+                      url: snapshot.data![index].mediaFileUrl,
+                      title: snapshot.data![index].name,
+                      id: snapshot.data![index].id,
+                      isComplete: snapshot.data![index].isDone,
+                      project: snapshot.data![index],
+                      isClient: false,
+                      width: width,
+                      v16: v16);
+                });
+          },
+        ),
+      ),
     );
   }
 }

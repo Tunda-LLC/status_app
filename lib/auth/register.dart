@@ -5,7 +5,9 @@ import 'package:status/common/colors.dart';
 // import '../toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:status/common/toast.dart';
+import 'package:status/controllers/projectController.dart';
 import 'package:status/intro/intro_index.dart';
+import 'package:status/pages/index.dart';
 
 class Register extends StatefulWidget {
   bool verify;
@@ -142,8 +144,22 @@ class _RegisterState extends State<Register> {
 
     if (user.emailVerified) {
       showSuccessToast("Email Verified", context);
-      // Navigator.push(context,
-      //     CupertinoPageRoute(builder: (context) => LocationSelectCountry()));
+      var result = await userLogIn(email: user.email!);
+      if (result == true) {
+        showSuccessToast("Account created Successfully", context);
+        Navigator.push(
+            context, CupertinoPageRoute(builder: (context) => Index()));
+      } else {
+        var res = await userSignUp(email: user.email!);
+        if (res == true) {
+          showSuccessToast("Account created Successfully", context);
+          Navigator.push(
+              context, CupertinoPageRoute(builder: (context) => Index()));
+        } else {
+          showErrorToast("Please try again", context);
+          return;
+        }
+      }
     } else {
       showErrorToast(
           "Please check your email to verify or double tap", context);

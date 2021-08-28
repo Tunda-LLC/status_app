@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:status/auth/register.dart';
 // import 'package:hive/hive.dart';
 import 'package:status/common/colors.dart';
 import 'package:status/common/toast.dart';
+import 'package:status/controllers/projectController.dart';
+import 'package:status/main.dart';
 import 'package:status/pages/index.dart';
 import 'forgot_password.dart';
 import 'google_signin.dart';
@@ -20,13 +23,13 @@ class _LoginState extends State<Login> {
   TextEditingController _emailController = TextEditingController();
 
   // bool _verified = false;
-  var _box, _tokenBox;
+  var _box;
   bool _loading = false, _loading2 = false;
   @override
   void initState() {
     super.initState();
     // HIVE BOX
-    // _box = Hive.box(UserRegBox);
+    _box = Hive.box(UserBox);
     // _tokenBox = Hive.box(TokenBox);
   }
 
@@ -48,25 +51,43 @@ class _LoginState extends State<Login> {
     //todo go ahead check if account exists then show him so he can be a seller
     User user = FirebaseAuth.instance.currentUser!;
 
-    // if (result.runtimeType == user_model.User) {
-    //   _tokenBox.put("id", result.id); //put the id here
-    //   _tokenBox.put("default_currency", result.currency);
-    //   _tokenBox.put("country_name", result.country_name);
-    //   _tokenBox.put("country_id", result.country_id);
-    showSuccessToast("You are logged In", context);
-    Navigator.push(context, CupertinoPageRoute(builder: (context) => Index()));
-    // } else {
-    //   // if (result.contains('404')) {
-    //   // new user
-    //   setState(() {
-    //     _loading = false;
-    //   });
-    //   _box.put('name', user.displayName);
-    //   _box.put('email', user.email);
-    //   // Navigator.push(context,
-    //   //     CupertinoPageRoute(builder: (context) => LocationSelectCountry()));
-    //   // }
-    // }
+    var result = await userLogIn(email: user.email!);
+    if (result == true) {
+      showSuccessToast("You are logged In", context);
+      Navigator.push(
+          context, CupertinoPageRoute(builder: (context) => Index()));
+    } else {
+      setState(() {
+        _loading = false;
+      });
+      _box.put('name', user.displayName);
+      _box.put('email', user.email);
+      //  register them
+      var res = await userSignUp(email: user.email!);
+      if (res == true) {
+        showSuccessToast("Account created Successfully", context);
+        Navigator.push(
+            context, CupertinoPageRoute(builder: (context) => Index()));
+      } else {
+        showErrorToast("Please try again", context);
+        return;
+      }
+    }
+  }
+
+  _verify(User user) async {
+    user.reload();
+    if (user.emailVerified) {
+      return true;
+    }
+    try {
+      await user.sendEmailVerification();
+      showToast("Check your email to verify", context);
+      return false;
+    } catch (e) {
+      showErrorToast("Error verifying email", context);
+      return false;
+    }
   }
 
   _signIn() async {
@@ -93,27 +114,18 @@ class _LoginState extends State<Login> {
       // User user = FirebaseAuth.instance.currentUser;
       bool _verified = await _verify(user);
       if (_verified) {
-        // var result = await userLogIn(email: user.email);
-        // if (result.runtimeType == user_model.User) {
-        //   _tokenBox.put("id", result.id); //put the id here
-        //   _tokenBox.put("default_currency", result.currency);
-        //   _tokenBox.put("country_name", result.country_name);
-        //   _tokenBox.put("country_id", result.country_id);
-
-        //   showSuccessToast("You are logged In", context);
-        //   Navigator.push(
-        //       context, CupertinoPageRoute(builder: (context) => Index()));
-        // } else {
-        //   // print(result.runtimeType.toString());
-        //   showErrorToast("Problem logging in, check your connection", context);
-        //   setState(() {
-        //     _loading = false;
-        //   });
-        //   return;
-        // }
-      } else {
-        // go to your email and come back
-        // leave this empty
+        var result = await userLogIn(email: user.email!);
+        if (result == true) {
+          showSuccessToast("You are logged In", context);
+          Navigator.push(
+              context, CupertinoPageRoute(builder: (context) => Index()));
+        } else {
+          showErrorToast("Problem logging in, check your connection", context);
+          setState(() {
+            _loading = false;
+          });
+          return;
+        }
       }
     } on FirebaseAuthException catch (e) {
       // print(e.toString());
@@ -130,21 +142,6 @@ class _LoginState extends State<Login> {
         });
         return;
       }
-    }
-  }
-
-  _verify(User user) async {
-    user.reload();
-    if (user.emailVerified) {
-      return true;
-    }
-    try {
-      await user.sendEmailVerification();
-      showToast("Check your email to verify", context);
-      return false;
-    } catch (e) {
-      showErrorToast("Error verifying email", context);
-      return false;
     }
   }
 

@@ -50,8 +50,8 @@ class _GigTileState extends State<GigTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context)
-          .push(CupertinoPageRoute(builder: (context) => Gig())),
+      // onTap: () => Navigator.of(context)
+      //     .push(CupertinoPageRoute(builder: (context) => Gig())),
       child: Container(
         margin: EdgeInsets.only(bottom: 8),
         child: Material(

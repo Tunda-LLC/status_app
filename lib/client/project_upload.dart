@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:status/client/adlists.dart';
 import 'package:status/client/choose_days.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/common/toast.dart';
 // import 'package:status/pages/client/adlists.dart';
 // import 'package:status/pages/client/choose_days.dart';
 
@@ -16,6 +20,8 @@ class ProjectUpload extends StatefulWidget {
 class _ProjectUploadState extends State<ProjectUpload> {
   late PageController _pageController;
   int _verifyPage = 1;
+  late File uploaded;
+  bool isUploaded = false;
   onSentFirst() {
     _pageController.animateToPage(
       _verifyPage,
@@ -51,7 +57,7 @@ class _ProjectUploadState extends State<ProjectUpload> {
         centerTitle: true,
         elevation: 2,
         title: Text(
-          "New Project",
+          "New Advert",
           style: TextStyle(color: APP_ACCENT, fontWeight: FontWeight.w500),
         ),
       ),
@@ -63,7 +69,7 @@ class _ProjectUploadState extends State<ProjectUpload> {
             Container(
               padding: EdgeInsets.only(bottom: v16),
               child: Text(
-                "Enter a title for the project",
+                "Enter a title for your advert",
                 style: titleTextStyle.copyWith(
                     fontWeight: FontWeight.w500, color: APP_ACCENT),
               ),
@@ -81,8 +87,59 @@ class _ProjectUploadState extends State<ProjectUpload> {
                     )),
               ),
             ),
+            Container(
+              padding: EdgeInsets.only(top: v16),
+              child: Text(
+                "Press below to upload image",
+                style: titleTextStyle.copyWith(
+                    fontWeight: FontWeight.w500, color: APP_ACCENT),
+              ),
+            ),
+            isUploaded
+                ? Container(
+                    margin: EdgeInsets.all(v16),
+                    child: Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: Stack(
+                        children: <Widget>[
+                          Image.file(
+                            uploaded,
+                            width: 300,
+                            height: 300,
+                          ),
+                          Positioned(
+                            right: 5,
+                            top: 5,
+                            child: InkWell(
+                              child: Icon(
+                                Icons.remove_circle,
+                                size: 32,
+                                color: Colors.red,
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  isUploaded = false;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(
+                    margin: EdgeInsets.all(v16),
+                    child: Card(
+                      child: IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          _onAddImageClick();
+                        },
+                      ),
+                    ),
+                  ),
             InkWell(
-              onTap: () => onRead(),
+              onTap: () => onSentFirst(),
               child: Container(
                 margin: EdgeInsets.only(top: v16 * 1.5, bottom: v16),
                 child:
@@ -91,44 +148,20 @@ class _ProjectUploadState extends State<ProjectUpload> {
             ),
           ]),
           AdsListV3(),
-          ChooseDays(),
         ]),
       ),
     );
   }
 
-  void onRead() {
-    final dbRef = FirebaseDatabase.instance.reference();
-    dbRef.once().then((DataSnapshot snapshot) {
-      print('Data : ${snapshot.value}');
+  Future _onAddImageClick() async {
+    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (File(image!.path).lengthSync() > 8000000) {
+      showToast("Image too large", context);
+      return;
+    }
+    setState(() {
+      uploaded = File(image.path);
+      isUploaded = true;
     });
   }
-
-  onSent() {
-    final dbRef = FirebaseDatabase.instance.reference();
-    dbRef
-        .child("flutterDevsTeam7")
-        .set({'name': 'Navy', 'description': 'Associate Software Engineer'});
-  }
-
-  void updateData() {
-    final dbRef = FirebaseDatabase.instance.reference();
-    dbRef.child('flutterDevsTeam1').update({'description': 'CEO'});
-    dbRef.child('flutterDevsTeam2').update({'description': 'Team Lead'});
-    dbRef
-        .child('flutterDevsTeam3')
-        .update({'description': 'Senior Software Engineer'});
-  }
-
-  void deleteData() {
-    final databaseReference = FirebaseDatabase.instance.reference();
-    databaseReference.child('flutterDevsTeam1').remove();
-    databaseReference.child('flutterDevsTeam2').remove();
-    databaseReference.child('flutterDevsTeam3').remove();
-  }
-
-  // onCow() {
-  //   firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
-  //       .ref('images/defaultProfile.png');
-  // }
 }

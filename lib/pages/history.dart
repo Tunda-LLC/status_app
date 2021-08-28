@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/controllers/projectController.dart';
 import 'package:status/influenca/gig/gig.dart';
 import 'package:status/influenca/widgets/gig_tile.dart';
 import 'package:status/influenca/widgets/image_tiles.dart';
+import 'package:status/main.dart';
 import 'package:status/models/project.dart';
 import 'package:status/pages/client_project.dart';
 
@@ -17,11 +21,15 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> with AutomaticKeepAliveClientMixin {
   late String id;
-  List<Project> projects = [];
+  // List<Project> projects = [];
+  late Future<List<Project>> _history;
+  late String myId;
   @override
   void initState() {
     super.initState();
-
+    var box = Hive.box(UserBox);
+    myId = box.get("id");
+    _history = fetchHistory(myId: myId);
     User user = FirebaseAuth.instance.currentUser!;
     id = user.uid;
   }
@@ -47,44 +55,42 @@ class _HistoryState extends State<History> with AutomaticKeepAliveClientMixin {
       body: Container(
         width: width,
         height: height,
-        child: StreamBuilder(
-            stream: FirebaseDatabase.instance
-                .reference()
-                .child("projects")
-                .orderByChild("client_id")
-                .equalTo(id)
-                .onValue,
-            builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: Text("Your projects will appear here :)"),
-                );
-              }
+        child: FutureBuilder<List<Project>>(
+          future: _history,
+          builder: (context, AsyncSnapshot<List<Project>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.none) {
+              _history = fetchHistory(myId: myId);
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: Padding(
+                padding: EdgeInsets.all(v16),
+                child: CupertinoActivityIndicator(),
+              ));
+            }
 
-              Map<dynamic, dynamic> map = snapshot.data!.snapshot.value;
+            if (snapshot.data == null || snapshot.data?.length == 0) {
+              return Center(
+                  child: Padding(
+                padding: EdgeInsets.all(v16),
+                child: Text("No history yet"),
+              ));
+            }
 
-              projects.clear();
-
-              map.forEach((dynamic, v) => projects.add(new Project(
-                    title: v["title"],
-                    caption: v["caption"],
-                    url: v["media"],
-                    id: snapshot.data!.snapshot.key!,
-                    is_done: v['is_done'],
-                    clientId: v["client_id"],
-                  )));
-              return ListView.builder(
-                  itemCount: projects.length,
-                  itemBuilder: (context, index) {
-                    return ProjectTile(
-                        url: projects[index].url,
-                        title: projects[index].title,
-                        id: projects[index].id,
-                        isComplete: projects[index].is_done,
-                        width: width,
-                        v16: v16);
-                  });
-            }),
+            return ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (context, index) {
+                  return ProjectTile(
+                      url: snapshot.data![index].mediaFileUrl,
+                      title: snapshot.data![index].name,
+                      id: snapshot.data![index].id,
+                      isComplete: snapshot.data![index].isDone,
+                      project: snapshot.data![index],
+                      width: width,
+                      v16: v16);
+                });
+          },
+        ),
       ),
     );
   }
@@ -101,12 +107,14 @@ class ProjectTile extends StatefulWidget {
       required this.width,
       required this.id,
       required this.isComplete,
+      required this.project,
       this.isClient = true,
       this.isVerified = false,
       required this.v16})
       : super(key: key);
   double v16, width;
   String url, title, id;
+  Project project;
   bool isComplete, isClient, isVerified;
   @override
   _ProjectTileState createState() => _ProjectTileState();
@@ -126,9 +134,11 @@ class _ProjectTileState extends State<ProjectTile> {
       onTap: () => navigatePage(context,
           className: widget.isClient
               ? ClientProject(
-                  projectId: widget.id,
+                  project: widget.project,
                 )
-              : Gig()),
+              : Gig(
+                  project: widget.project,
+                )),
       child: Container(
         padding: EdgeInsets.only(
           left: widget.v16,
@@ -165,9 +175,7 @@ class _ProjectTileState extends State<ProjectTile> {
                       ? widget.isComplete
                           ? complete()
                           : ongoing()
-                      : widget.isVerified
-                          ? verified()
-                          : pending()
+                      : Container()
                 ],
               ),
             ),

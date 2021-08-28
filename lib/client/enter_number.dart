@@ -12,11 +12,21 @@ class EnterNumber extends StatefulWidget {
 
 class _EnterNumberState extends State<EnterNumber> {
   late PageController _pageController;
+  late TextEditingController _phoneController;
   int _verifyPage = 1;
+  onSentFirst() {
+    _pageController.animateToPage(
+      _verifyPage,
+      duration: Duration(milliseconds: 400),
+      curve: Curves.bounceInOut,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
+    _phoneController = TextEditingController();
   }
 
   @override
@@ -52,14 +62,14 @@ class _EnterNumberState extends State<EnterNumber> {
               Container(
                 padding: EdgeInsets.only(bottom: v16),
                 child: Text(
-                  "Enter phone number you are sending from",
+                  "Enter phone number you are paying from",
                   style: titleTextStyle.copyWith(
                       fontWeight: FontWeight.w500, color: APP_ACCENT),
                 ),
               ),
               Container(
                 child: TextField(
-                  // controller: _nameController,
+                  controller: _phoneController,
                   autofocus: false,
                   maxLines: 1,
                   decoration: InputDecoration(
@@ -71,6 +81,7 @@ class _EnterNumberState extends State<EnterNumber> {
                 ),
               ),
               InkWell(
+                onTap: () => onSentFirst(),
                 child: Container(
                   margin: EdgeInsets.only(top: v16, bottom: v16),
                   child: normalButton(

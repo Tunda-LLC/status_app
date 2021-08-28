@@ -58,8 +58,7 @@ class _IntroPageState extends State<IntroPage>
                           child: Text(
                             "A Tunda LLC Application",
                             textAlign: TextAlign.center,
-                            style: titleTextStyle.copyWith(
-                                color: Color(0xff000000)),
+                            style: titleTextStyle.copyWith(color: APP_PRIMARY),
                           ),
                         )
                       ],

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:status/client/enter_number.dart';
 // import 'dart:io' show Platform;
 
 import 'package:status/common/colors.dart';
@@ -68,12 +69,12 @@ class _AdsListV3State extends State<AdsListV3> {
                 });
               },
               title: Text(
-                "1,000 - 1,500 views/day",
+                "400 - 500 views",
                 style: normalTextStyle.copyWith(
                     color: _2AdValue ? APP_GOLD : REAL_BLACK),
               ),
               subtitle: Text(
-                "UGX 2,000 / day",
+                "UGX 2,000",
                 style: normalTextStyle.copyWith(
                     color: _2AdValue ? APP_GOLD : REAL_BLACK),
               ),
@@ -104,12 +105,12 @@ class _AdsListV3State extends State<AdsListV3> {
                 });
               },
               title: Text(
-                "5,000 - 5,500 views/day",
+                "800 - 1,000 views",
                 style: normalTextStyle.copyWith(
                     color: _5AdValue ? APP_GOLD : REAL_BLACK),
               ),
               subtitle: Text(
-                "UGX 4,000 / day",
+                "UGX 4,000",
                 style: normalTextStyle.copyWith(
                     color: _5AdValue ? APP_GOLD : REAL_BLACK),
               ),
@@ -117,41 +118,41 @@ class _AdsListV3State extends State<AdsListV3> {
           ),
 // ========================================================================= //
 // ====================================================================== //
-          Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: _12AdValue ? APP_GOLD : APP_GREY, width: 1),
-                borderRadius: BorderRadius.circular(4)),
-            child: RadioListTile(
-              controlAffinity: ListTileControlAffinity.leading,
-              value: 2,
-              groupValue: ad_val,
-              activeColor: APP_GOLD,
-              selected: _12AdValue,
-              onChanged: (int? value) {
-                setState(() {
-                  ad_val = value!;
-                  _12AdValue = true;
-                  _5AdValue = false;
-                  _2AdValue = false;
-                  _freeAdValue = false;
-                });
-              },
-              title: Text(
-                "10,000 - 12,000 views/day",
-                style: normalTextStyle.copyWith(
-                    color: _12AdValue ? APP_GOLD : REAL_BLACK),
-              ),
-              subtitle: Text(
-                "UGX 8,000 / day",
-                style: normalTextStyle.copyWith(
-                    color: _12AdValue ? APP_GOLD : REAL_BLACK),
-              ),
-            ),
-          ),
+          // Container(
+          //   decoration: BoxDecoration(
+          //       border: Border.all(
+          //           color: _12AdValue ? APP_GOLD : APP_GREY, width: 1),
+          //       borderRadius: BorderRadius.circular(4)),
+          //   child: RadioListTile(
+          //     controlAffinity: ListTileControlAffinity.leading,
+          //     value: 2,
+          //     groupValue: ad_val,
+          //     activeColor: APP_GOLD,
+          //     selected: _12AdValue,
+          //     onChanged: (int? value) {
+          //       setState(() {
+          //         ad_val = value!;
+          //         _12AdValue = true;
+          //         _5AdValue = false;
+          //         _2AdValue = false;
+          //         _freeAdValue = false;
+          //       });
+          //     },
+          //     title: Text(
+          //       "10,000 - 12,000 views/day",
+          //       style: normalTextStyle.copyWith(
+          //           color: _12AdValue ? APP_GOLD : REAL_BLACK),
+          //     ),
+          //     subtitle: Text(
+          //       "UGX 8,000 / day",
+          //       style: normalTextStyle.copyWith(
+          //           color: _12AdValue ? APP_GOLD : REAL_BLACK),
+          //     ),
+          //   ),
+          // ),
 // ========================================================================= //
           InkWell(
-            // onTap: () => navigatePage(context, className: ChooseDays()),
+            onTap: () => navigatePage(context, className: EnterNumber()),
             child: Container(
               margin: EdgeInsets.only(top: v16 * 1.6, bottom: v16),
               child: normalButton(v16: v16, bgColor: APP_ACCENT, title: "Next"),

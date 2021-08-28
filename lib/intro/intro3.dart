@@ -57,8 +57,7 @@ class _IntroPage3State extends State<IntroPage3>
                           child: Text(
                             "Earn money by sharing to yo whatsApp status",
                             textAlign: TextAlign.center,
-                            style: titleTextStyle.copyWith(
-                                color: Color(0xff000000)),
+                            style: titleTextStyle.copyWith(color: APP_PRIMARY),
                           ),
                         )
                       ],

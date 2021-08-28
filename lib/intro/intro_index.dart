@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:status/auth/login.dart';
 import 'package:status/common/colors.dart';
 import 'package:status/intro/intro.dart';
 import 'package:status/intro/intro2.dart';
@@ -46,7 +47,7 @@ class _IntroIndexState extends State<IntroIndex> {
         );
       });
     } else {
-      navigatePage(context, className: Index());
+      navigatePage(context, className: Login());
     }
   }
 

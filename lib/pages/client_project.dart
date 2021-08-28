@@ -1,43 +1,24 @@
-import 'package:firebase_database/firebase_database.dart';
+// import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
 import 'package:status/influenca/widgets/image_tiles.dart';
+import 'package:status/models/project.dart';
 import 'package:status/pages/verified_pages.dart';
 
 class ClientProject extends StatefulWidget {
-  const ClientProject({Key? key, required this.projectId}) : super(key: key);
-  final String projectId;
+  const ClientProject({Key? key, required this.project}) : super(key: key);
+  final Project project;
 
   @override
   _ClientProjectState createState() => _ClientProjectState();
 }
 
 class _ClientProjectState extends State<ClientProject> {
-  late String views, influencas, url, title, caption;
-  final dbRef = FirebaseDatabase.instance.reference();
+  // late String views, influencas, url, title, caption;
   @override
   void initState() {
     super.initState();
-    dbRef
-        .child("started_projects")
-        .child(widget.projectId)
-        .once()
-        .then((DataSnapshot snapshot) {
-      influencas = snapshot.value['influencas_used'];
-      views = snapshot.value['views_covered'];
-      print('Data : ${snapshot.value}');
-    });
-
-    dbRef
-        .child("projects")
-        .child(widget.projectId)
-        .once()
-        .then((DataSnapshot snapshot) {
-      title = snapshot.value['title'];
-      caption = snapshot.value['caption'];
-      url = snapshot.value['media'];
-      print('Data : ${snapshot.value}');
-    });
   }
 
   @override
@@ -70,107 +51,81 @@ class _ClientProjectState extends State<ClientProject> {
         width: width,
         height: height,
         child: ListView(
-            padding: EdgeInsets.only(
-                top: v16 * 1, left: v16 * 2, right: v16 * 2, bottom: v16 * 2),
+            padding:
+                EdgeInsets.only(top: v16, left: v16, right: v16, bottom: v16),
             children: <Widget>[
               //
               Container(
-                padding: EdgeInsets.only(bottom: v16),
-                child: Row(
-                  children: [
-                    Text(
-                      "Title:",
-                      style: titleTextStyle.copyWith(
-                          fontWeight: FontWeight.w500, color: APP_ACCENT),
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text(
-                          title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: titleTextStyle.copyWith(
-                              fontWeight: FontWeight.w500, color: APP_ACCENT),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(bottom: v16),
-                child: Row(
-                  children: [
-                    Text(
-                      "Views so far:",
-                      style: titleTextStyle.copyWith(
-                          fontWeight: FontWeight.w500, color: APP_ACCENT),
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text(
-                          views,
-                          style: titleTextStyle.copyWith(
-                              fontWeight: FontWeight.w500, color: APP_ACCENT),
-                        ),
-                      ),
-                    ),
-                  ],
+                padding: EdgeInsets.only(bottom: v16, top: v16),
+                child: Text(
+                  widget.project.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: titleTextStyle.copyWith(
+                      fontWeight: FontWeight.w500, color: APP_ACCENT),
                 ),
               ),
 
-              Container(
-                padding: EdgeInsets.only(bottom: v16),
-                child: Row(
-                  children: [
-                    Text(
-                      "Influencers so far:",
-                      style: titleTextStyle.copyWith(
-                          fontWeight: FontWeight.w500, color: APP_ACCENT),
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text(
-                          influencas,
-                          style: titleTextStyle.copyWith(
-                              fontWeight: FontWeight.w500, color: APP_ACCENT),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   padding: EdgeInsets.only(bottom: v16),
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         "Views so far:",
+              //         style: titleTextStyle.copyWith(
+              //             fontWeight: FontWeight.w500, color: APP_ACCENT),
+              //       ),
+              //       Expanded(
+              //         child: Container(
+              //           padding: EdgeInsets.only(left: 8),
+              //           child: Text(
+              //             views,
+              //             style: titleTextStyle.copyWith(
+              //                 fontWeight: FontWeight.w500, color: APP_ACCENT),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+
+              // Container(
+              //   padding: EdgeInsets.only(bottom: v16),
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         "Influencers so far:",
+              //         style: titleTextStyle.copyWith(
+              //             fontWeight: FontWeight.w500, color: APP_ACCENT),
+              //       ),
+              //       Expanded(
+              //         child: Container(
+              //           padding: EdgeInsets.only(left: 8),
+              //           child: Text(
+              //             influencas,
+              //             style: titleTextStyle.copyWith(
+              //                 fontWeight: FontWeight.w500, color: APP_ACCENT),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
               Container(
-                padding: EdgeInsets.only(bottom: v16),
-                child: Row(
-                  children: [
-                    Text(
-                      "Caption:",
-                      style: titleTextStyle.copyWith(
-                          fontWeight: FontWeight.w500, color: APP_ACCENT),
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.only(left: 8),
-                        child: Text(
-                          caption,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: titleTextStyle.copyWith(
-                              fontWeight: FontWeight.w500, color: APP_ACCENT),
-                        ),
-                      ),
-                    ),
-                  ],
+                padding: EdgeInsets.only(bottom: v16, top: v16),
+                child: Text(
+                  widget.project.caption,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: normalTextStyle.copyWith(
+                      fontWeight: FontWeight.w500, color: APP_PRIMARY),
                 ),
               ),
 
               InkWell(
-                onTap: () => navigatePage(context, className: VerifyProject()),
+                onTap: () => navigatePage(context,
+                    className: VerifyProject(project: widget.project)),
                 child: Container(
                   margin: EdgeInsets.only(
                       left: v16 * 3,
@@ -184,13 +139,31 @@ class _ClientProjectState extends State<ClientProject> {
 
               Container(
                 width: width - (4 * v16),
+                height: height / 1.5,
                 decoration: BoxDecoration(
-                  color: APP_GREY,
+                  color: SHIMMER_DARK,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: CustomNetworkImage(url)),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [CupertinoActivityIndicator()],
+                        )
+                      ],
+                    )),
+                    Positioned.fill(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(widget.project.mediaFileUrl),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ]),
       ),

@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage>
                         child: normalButton(
                             v16: v16 * 1.2,
                             bgColor: APP_ACCENT,
-                            title: "New Project"),
+                            title: "New Advert"),
                       ),
                     ],
                   ),
@@ -180,7 +180,7 @@ class _HomePageState extends State<HomePage>
               margin: EdgeInsets.only(
                   left: v16 * 3, right: v16 * 3, top: v16 * 1.4),
               child: normalButton(
-                  v16: v16 * 1, bgColor: APP_ACCENT, title: "Influenca"),
+                  v16: v16 * 1, bgColor: APP_ACCENT, title: "Influenca Gigs"),
             ),
           ),
         ]),

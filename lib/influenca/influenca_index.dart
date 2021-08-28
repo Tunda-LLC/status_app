@@ -63,8 +63,8 @@ class _InfluencerIndexState extends State<InfluencerIndex> {
               label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(EvaIcons.homeOutline), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(EvaIcons.pieChartOutline), label: "Home"),
+          // BottomNavigationBarItem(
+          //     icon: Icon(EvaIcons.pieChartOutline), label: "Home"),
         ],
       ),
       body: Container(
@@ -78,9 +78,17 @@ class _InfluencerIndexState extends State<InfluencerIndex> {
             //
             MyGigs(),
             InfluencaHome(),
-            Earnings(),
+            // Earnings(),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: REAL_WHITE,
+        child: Icon(
+          Icons.refresh_outlined,
+          color: APP_ACCENT,
+        ),
+        onPressed: () => navigatePage(context, className: InfluencerIndex()),
       ),
     );
   }

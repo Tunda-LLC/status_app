@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:status/common/colors.dart';
+import 'package:status/controllers/projectController.dart';
+import 'package:status/models/project.dart';
 import 'package:status/pages/history.dart';
 
 class InfluencaHome extends StatefulWidget {
@@ -15,6 +17,13 @@ class _InfluencaHomeState extends State<InfluencaHome>
   @override
   bool get wantKeepAlive => true;
 
+  late Future<List<Project>> _gigs;
+  @override
+  void initState() {
+    super.initState();
+    _gigs = fetchGigs();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -25,7 +34,7 @@ class _InfluencaHomeState extends State<InfluencaHome>
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: REAL_WHITE,
-        leading: GestureDetector(
+        leading: InkWell(
           onTap: () {
             Navigator.pop(context);
           },
@@ -42,32 +51,48 @@ class _InfluencaHomeState extends State<InfluencaHome>
         ),
       ),
       body: Container(
-          width: width,
-          height: height,
-          child: ListView(
-              padding:
-                  EdgeInsets.only(bottom: v16, left: v16 / 2, right: v16 / 2),
-              children: <Widget>[
-                //
-                ProjectTile(
-                    url: testImage,
-                    title: "Katooke ads",
-                    isComplete: true,
-                    width: width,
-                    v16: v16),
-                ProjectTile(
-                    url: testImage,
-                    title: "Tunda ads",
-                    isComplete: false,
-                    width: width,
-                    v16: v16),
-                ProjectTile(
-                    url: testImage2,
-                    title: "Tunda Status",
-                    isComplete: false,
-                    width: width,
-                    v16: v16),
-              ])),
+        width: width,
+        height: height,
+        child: FutureBuilder<List<Project>>(
+          future: _gigs,
+          builder: (context, AsyncSnapshot<List<Project>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.none) {
+              _gigs = fetchGigs();
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: Padding(
+                padding: EdgeInsets.all(v16),
+                child: CupertinoActivityIndicator(),
+              ));
+            }
+
+            if (snapshot.data == null || snapshot.data?.length == 0) {
+              return Center(
+                  child: Padding(
+                padding: EdgeInsets.all(v16),
+                child: Text("No gigs yet"),
+              ));
+            }
+
+            return ListView.builder(
+                itemCount: snapshot.data?.length,
+                padding:
+                    EdgeInsets.only(bottom: v16, left: v16 / 2, right: v16 / 2),
+                itemBuilder: (context, index) {
+                  return ProjectTile(
+                      url: snapshot.data![index].mediaFileUrl,
+                      title: snapshot.data![index].name,
+                      id: snapshot.data![index].id,
+                      isComplete: snapshot.data![index].isDone,
+                      project: snapshot.data![index],
+                      isClient: false,
+                      width: width,
+                      v16: v16);
+                });
+          },
+        ),
+      ),
     );
   }
 }

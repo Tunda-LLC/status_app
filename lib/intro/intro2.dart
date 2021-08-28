@@ -55,10 +55,9 @@ class _IntroPage2State extends State<IntroPage2>
                           padding:
                               EdgeInsets.only(top: 8, left: v16, right: v16),
                           child: Text(
-                            "Share yo image/video with over 500 people",
+                            "Share yo image/poster with over 500 people via WhatsApp status",
                             textAlign: TextAlign.center,
-                            style: titleTextStyle.copyWith(
-                                color: Color(0xff000000)),
+                            style: titleTextStyle.copyWith(color: APP_PRIMARY),
                           ),
                         )
                       ],
